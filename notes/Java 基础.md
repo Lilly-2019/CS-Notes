@@ -45,14 +45,14 @@
 ## 一、数据类型
 
 ### 基本类型
-整数
+整数  
 - byte/8
 - short/16
 - int/32
 - long/64
-- float/32
 
 小数
+- float/32
 - double/64
 
 字符
@@ -61,7 +61,18 @@
 布尔
 - boolean/\~
 
+
 boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 支持 boolean 数组，但是是通过读写 byte 数组来实现的。
+
+### 默认值
+- byte/0
+- short/0
+- int/0
+- long/0L
+- float/0.0f
+- double/0.0d
+- char/'u0000'
+- boolean/false
 
 - [Primitive Data Types](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html)
 - [The Java® Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
@@ -77,7 +88,7 @@ int y = x;         // 拆箱 调用了 X.intValue()
 
 - [Autoboxing and Unboxing](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
 
-### 缓存池
+### 缓存池 :star:
 
 new Integer(123) 与 Integer.valueOf(123) 的区别在于：
 
