@@ -80,6 +80,10 @@
 - [代码可读性](https://github.com/Lilly-2019/CS-Notes/blob/master/notes/代码可读性.md)
 - [代码风格规范](https://github.com/Lilly-2019/CS-Notes/blob/master/notes/代码风格规范.md)
 
+## 个性化笔记
+:star: 表示不熟悉程度，:star: 越多，表示越不熟悉，最多五颗
+:Question circle: :代表疑问
+
 ## :memo: 后记
 
 ### 排版
