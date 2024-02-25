@@ -171,11 +171,11 @@ System.out.println(m == n); // true
 [StackOverflow : Differences between new Integer(123), Integer.valueOf(123) and just 123
 ](https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123)
 
-## 二、String
+## 二、String :star:
 
 ### 概览
 
-String 被声明为 final，因此它不可被继承。(Integer 等包装类也不能被继承）
+String 被声明为 final，因此**它不可被继承**。(Integer 等包装类也不能被继承）
 
 在 Java 8 中，String 内部使用 char 数组存储数据。
 
@@ -236,6 +236,8 @@ String 不可变性天生具备线程安全，可以在多个线程中安全地�
 - String 不可变，因此是线程安全的
 - StringBuilder 不是线程安全的
 - StringBuffer 是线程安全的，内部使用 synchronized 进行同步
+
+[为什么StringBuilder是线程不安全的？](https://cloud.tencent.com/developer/article/1700344)
 
 [StackOverflow : String, StringBuffer, and StringBuilder](https://stackoverflow.com/questions/2971315/string-stringbuffer-and-stringbuilder)
 
@@ -314,7 +316,7 @@ Constant pool:
 
 在 Constant Pool 中，#19 存储这字符串字面量 "abc"，#3 是 String Pool 的字符串对象，它指向 #19 这个字符串字面量。在 main 方法中，0: 行使用 new #2 在堆中创建一个字符串对象，并且使用 ldc #3 将 String Pool 中的字符串对象作为 String 构造函数的参数。
 
-以下是 String 构造函数的源码，可以看到，在将一个字符串对象作为另一个字符串对象的构造函数参数时，并不会完全复制 value 数组内容，而是都会指向同一个 value 数组。
+以下是 String 构造函数的源码，可以看到，在将一个字符串对象作为另一个字符串对象的构造函数参数时，**并不会完全复制 value 数组内容，而是都会指向同一个 value 数组**。
 
 ```java
 public String(String original) {
@@ -327,7 +329,15 @@ public String(String original) {
 
 ### 参数传递
 
-Java 的参数是以值传递的形式传入方法中，而不是引用传递。
+Java 的参数是**以值传递**的形式传入方法中，而不是引用传递。
+
+如果传进来的参数类型是对象或者是数组类型的时候，也只是拷贝了引用的值罢了，之所以能修改引用数据是因为它们同时指向了一个对象，但这仍然是按值调用而不是引用调用。
+
+如果该值在栈中，那么因为是直接拷贝的值，所以函数内部对参数进行操作不会对外部变量产生影响。
+
+如果原来拷贝的是原值在堆中的地址，那么需要先根据该地址找到堆中对应的位置，再进行操作。因为传递的是地址的拷贝，所以函数内对值的操作对外部变量是可见的。
+
+<div align="center"><img width="350px" src="./pics/值传递与引用传递的区别.png"></img></div>
 
 以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。
 
@@ -391,11 +401,35 @@ public class PassByValueExample {
 }
 ```
 
+简洁版
+```
+public static void main(String[] args) {
+    Dog aDog = new Dog("Max");
+    Dog oldDog = aDog;
+
+    // we pass the object to foo
+    foo(aDog);
+    // aDog variable is still pointing to the "Max" dog when foo(...) returns
+    aDog.getName().equals("Max"); // true
+    aDog.getName().equals("Fifi"); // false
+    aDog == oldDog; // true
+}
+
+public static void foo(Dog d) {
+    d.getName().equals("Max"); // true
+    // change d inside of foo() to point to a new Dog instance "Fifi"
+    d = new Dog("Fifi");
+    d.getName().equals("Fifi"); // true
+}
+```
+
+[Java中的参数传递，到底是值传递还是引用传递？](https://blog.csdn.net/weixin_43232955/article/details/106082129)
+
 [StackOverflow: Is Java “pass-by-reference” or “pass-by-value”?](https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value)
 
 ### float 与 double
 
-Java 不能隐式执行向下转型，因为这会使得精度降低。
+Java **不能隐式执行向下转型**，因为这会使得精度降低。
 
 1.1 字面量属于 double 类型，不能直接将 1.1 直接赋值给 float 变量，因为这是向下转型。
 
